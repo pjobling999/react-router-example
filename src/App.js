@@ -19,7 +19,7 @@ export class App extends React.Component {
                 })}
       </div>
 
-      <h2>JOBBO SINGLES</h2>
+      <h2>JOBBO TUNES AND JOBBO REMIXES</h2>
       <div style={{ width: 400 }}>
          
               {JobboSingles.map((item, index) => {
