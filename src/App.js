@@ -14,56 +14,63 @@ export class App extends React.Component {
     return (
     
     <div>
-      <h2>JOBBO MIXES</h2>
-      <div >
-      
+      <div>
+        <header>
+          <h1 className="">THE TUNE ZONE</h1>
+        </header>
+      </div>
+
+      <main>
+        <p className="sectionHeaders">JOBBO MIXES</p>
+        <div >
+          
+          <ul className='tilesWrap'>
+            {JobboMixes.map((item, index) => {
+              
+              return (
+              
+                <li onClick={() => {this.handleClick(item.href);}} key={index}>
+                  <h2>{index}</h2>
+                  <h3>{item.Title}</h3>
+                  <p>
+                  
+                  </p>
+                  <button>Click to Play</button>
+                </li>
+                
+              )
+              
+            })}
+
+            </ul>
+
+        </div>
+
+        <p className="sectionHeaders">JOBBO ORIGINAL TUNES AND JOBBO REMIXES</p>
+        <div >
+          
         <ul className='tilesWrap'>
-          {JobboMixes.map((item, index) => {
-            
-            return (
-            
-              <li onClick={() => {this.handleClick(item.href);}} key={index}>
-                <h2>{index}</h2>
-                <h3>{item.Title}</h3>
-                <p>
-                
-                </p>
-                <button>Click to Play</button>
-              </li>
+            {JobboSingles.map((item, index) => {
               
-            )
-            
-          })}
-
-          </ul>
-
-      </div>
-
-      <h2>JOBBO TUNES AND JOBBO REMIXES</h2>
-      <div >
-         
-      <ul className='tilesWrap'>
-          {JobboSingles.map((item, index) => {
-            
-            return (
-            
-              <li onClick={() => {this.handleClick(item.href);}} key={index}>
-                <h2>{index}</h2>
-                <h3>{item.Title}</h3>
-                <p>
-                
-                </p>
-                <button>Click to Play</button>
-              </li>
+              return (
               
-            )
-            
-          })}
+                <li onClick={() => {this.handleClick(item.href);}} key={index}>
+                  <h2>{index}</h2>
+                  <h3>{item.Title}</h3>
+                  <p>
+                  
+                  </p>
+                  <button>Click to Play</button>
+                </li>
+                
+              )
+              
+            })}
 
-          </ul>
+            </ul>
 
-      </div>
-
+        </div>
+      </main>
       
     </div>
   )
