@@ -56,6 +56,7 @@ body {
 	opacity: 0;
 	cursor: pointer;
 	overflow: hidden;
+	z-index: 1;
 }
 .tilesWrap li button:before {
 	content: '';
@@ -105,6 +106,7 @@ body {
 	height: 100%;
 	left: 0;
 	top: 0;
+	z-index: 0;
 	background: rgba(255, 255, 255, 0.02);
 }
 .tilesWrap li:nth-child(1):before {

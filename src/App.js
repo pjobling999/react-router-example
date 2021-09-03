@@ -29,13 +29,13 @@ export class App extends React.Component {
               
               return (
               
-                <li onClick={() => {this.handleClick(item.href);}} key={index}>
+                <li  key={index}>
                   <h2>{index}</h2>
-                  <h3>{item.Title}</h3>
+                  <h3 ><a style={{color: "#b7b7b7"}} href={item.href}>{item.Title}</a></h3>
                   <p>
                   
                   </p>
-                  <button>Click to Play</button>
+                  <button onClick={() => {this.handleClick(item.href);}}>Click to Play</button>
                 </li>
                 
               )
@@ -54,13 +54,13 @@ export class App extends React.Component {
               
               return (
               
-                <li onClick={() => {this.handleClick(item.href);}} key={index}>
+                <li  key={index}>
                   <h2>{index}</h2>
-                  <h3>{item.Title}</h3>
+                  <h3 ><a style={{color: "#b7b7b7"}} href={item.href}>{item.Title}</a></h3>
                   <p>
                   
                   </p>
-                  <button>Click to Play</button>
+                  <button onClick={() => {this.handleClick(item.href);}}>Click to Play</button>
                 </li>
                 
               )
