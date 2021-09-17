@@ -2,12 +2,24 @@ import React from 'react'
 import Jobbo from "./jobboStuff";
 import './App.module.css'; 
 
+const styles = {
+  contactDiv: {
+    width:"100%",
+    margin:"0px auto",
+  },
+  contactHref: {
+    fontSize:"16px"
+  }
+};
+
 export class App extends React.Component {
   
     handleClick = (name) => {
       window.location.href = name;
     };
-  
+    
+    
+
     render() { 
     
     return (
@@ -20,6 +32,11 @@ export class App extends React.Component {
         </div>
 
         <main>
+
+        <div style={styles.contactDiv}>
+          <a style={styles.contactHref} href="mailto:djjobbo@hotmail.com">Contact JOBBO</a>
+        </div>
+        
 
         {Jobbo.map((topItem, i) => {
 
@@ -55,7 +72,7 @@ export class App extends React.Component {
         )
         })}
 
-<a href="mailto:djjobbo@hotmail.com">Contact</a>
+
         </main>
       </div>
     )
