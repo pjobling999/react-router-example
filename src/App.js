@@ -55,6 +55,7 @@ export class App extends React.Component {
         )
         })}
 
+<a href="mailto:djjobbo@hotmail.com">Contact</a>
         </main>
       </div>
     )
