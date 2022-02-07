@@ -41,7 +41,7 @@ export class App extends React.Component {
                       <p>
                       
                       </p>
-                      <button onClick={() => {this.handleClick(item.href);}}>Click to Play</button>
+                      <button onClick={() => {this.handleClick(item.href);}}>Download</button>
                     </li>
                     
                   )
