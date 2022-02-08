@@ -28,7 +28,18 @@ app.get("/api/:id/:title", (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send(process.env.GOOGLE_API_KEY);
+
+    fetch(`https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${process.env.GOOGLE_API_KEY}`).then(res2 => new Promise((resolve, reject) => {
+        //const dest = fs.createWriteStream('./tmp/download.mp3');
+        //res2.body.pipe(dest);
+        dest.on('close', () => resolve());
+        dest.on('error', reject);
+    })).then(x => { 
+            
+        res.send(process.env.GOOGLE_API_KEY);
+    });
+    
+
   });
 
 app.listen(PORT, () => {
