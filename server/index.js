@@ -28,7 +28,7 @@ app.get("/api/:id/:title", (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('TEST!');
+    res.send(process.env.GOOGLE_API_KEY);
   });
 
 app.listen(PORT, () => {
