@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
         dest.on('error', reject);
     })).then(x => { 
             
-        res.send(process.env.GOOGLE_API_KEY);
+        res.send(process.env.GOOGLE_API_KEY).end();
     });
     
 
