@@ -3,10 +3,19 @@ import Jobbo from "./jobboStuff";
 import './App.module.css'; 
 
 export class App extends React.Component {
-  
-    handleClick = (name) => {
-      window.location.href = name;
-    };
+
+    
+    // handleClick = (name) => {
+
+    //   fetch("/api")
+    //   .then( res => res.blob() )
+    //   .then( blob => {
+    //     var file = window.URL.createObjectURL(blob);
+    //     window.location.assign(file);
+    //   });
+
+    //   //window.location.href = '/api';
+    // };
     
     render() { 
     
@@ -37,11 +46,10 @@ export class App extends React.Component {
                   
                     <li  key={index}>
                       <h2>{index}</h2>
-                      <h3 ><a style={{color: "#b7b7b7"}} href={item.href}>{item.Title}</a></h3>
+                      <h3 ><a style={{color: "#b7b7b7"}} download href={'/api/' + item.href + '/' + item.Title} >{item.Title}</a></h3>
                       <p>
-                      
                       </p>
-                      <button onClick={() => {this.handleClick(item.href);}}>Download</button>
+                      {/* <button onClick={() => {this.handleClick(item.href);}}>Download</button> */}
                     </li>
                     
                   )
