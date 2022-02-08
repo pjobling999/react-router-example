@@ -27,6 +27,10 @@ app.get("/api/:id/:title", (req, res) => {
 
 });
 
+app.get('/', (req, res) => {
+    res.send('TEST!');
+  });
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
