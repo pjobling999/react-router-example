@@ -16,7 +16,7 @@ const downloadFile = (async (url, path, response, title) => {
     
         const dest = fs.createWriteStream(path);
         res.body.pipe(dest);
-        dest.on('close', () => resolve());
+        dest.on('finish', () => resolve());
         dest.on('error', reject);
 
     })).then(async () => { 
@@ -32,12 +32,12 @@ const downloadFile = (async (url, path, response, title) => {
 
             file.pipe(response);
             file.on("error", reject);
-            file.on("close", resolve);
+            file.on("finsh", resolve);
 
             
 
         }).then(x => console.log("code complete"));
-        
+
     });
 
   });
