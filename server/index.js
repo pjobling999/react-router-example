@@ -9,10 +9,12 @@ const app = express();
 const downloadFile = (async (url, path) => {
     
     const res = await fetch(url);
+    console.log('fetch done');
     const dest = fs.createWriteStream(path);
     await new Promise((resolve, reject) => {
        
         res.body.pipe(dest);
+        console.log('pipe done');
         res.body.on("error", reject);
         dest.on('finish', resolve);
 
@@ -32,7 +34,7 @@ app.get("/api/:id/:title", async (req, res) => {
     console.log(url);
     
     await downloadFile(url, path);
-
+    console.log('downloaded');
     res.download(path, title + '.mp3');
 });
 
