@@ -9,22 +9,17 @@ const app = express();
 
 
 const downloadFile = (async (url, path, response, title) => {
-    const res = await fetch(url);
-    console.log("fetch executied");
-    const fileStream = fs.createWriteStream(path);
-    await new Promise((resolve, reject) => {
-
-        console.log("into first promise");
-
-        res.body.pipe(fileStream);
-        res.body.on("error", reject);
-        fileStream.on("finish", resolve);
-      }).catch(function(error) {
-
-        console.log("ERROR GETTING DRIVE FILE:" + error);
-        throw new Error(error);
+    
+    await fetch(url).then(res => new Promise((resolve, reject) => {
         
-      }).then(async () => { 
+        console.log("fetch executied");
+    
+        const dest = fs.createWriteStream(path);
+        res.body.pipe(dest);
+        res.body.on("error", reject);
+        dest.on("finish", resolve);
+
+    })).then(async () => { 
             
         console.log("into 2nd part");
 
@@ -41,17 +36,9 @@ const downloadFile = (async (url, path, response, title) => {
 
             console.log("code complete");
 
-        }).catch(function(error) {
-
-            console.log("ERROR SENDING FILE:" + error);
-            throw new Error(error);
-
-          });
-            
-            
-                
+        });
     });
-    
+
   });
 
 
@@ -76,7 +63,7 @@ app.get("/api/:id/:title", (req, res) => {
     //         readStream.pipe(res);
     //     });
 
-    downloadFile(`https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`,'tmp/download.mp3',res, title)
+    downloadFile(url,'tmp/download.mp3',res, title)
 
     
 
