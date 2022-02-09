@@ -15,6 +15,11 @@ const downloadFile = (async (url, path, response, title) => {
         res.body.pipe(fileStream);
         res.body.on("error", reject);
         fileStream.on("finish", resolve);
+      }).catch(function(error) {
+
+        console.log("ERROR GETTING DRIVE FILE:" + error);
+        throw new Error(error);
+        
       }).then(async () => { 
             
         let file = fs.createReadStream(path);
@@ -23,9 +28,15 @@ const downloadFile = (async (url, path, response, title) => {
         await new Promise((resolve, reject) => {
             
             file.pipe(response);
-            //response.body.on("error", reject);
+            file.on("error", reject);
             file.on("finish", resolve);
-        });
+            
+        }).catch(function(error) {
+
+            console.log("ERROR SENDING FILE:" + error);
+            throw new Error(error);
+
+          });
             
             
                 
