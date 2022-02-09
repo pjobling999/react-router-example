@@ -8,7 +8,11 @@ const app = express();
 
 const downloadFile = (async (url, path) => {
     
-    const res = await fetch(url);
+    var headers = {
+        referer: 'https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com'
+      }
+
+    const res = await fetch(url, { method: 'GET', headers: headers});
     const dest = fs.createWriteStream(path);
     await new Promise((resolve, reject) => {
        
@@ -27,7 +31,7 @@ app.get("/api/:id/:title", async (req, res) => {
     var title = req.params.title;
     var key = process.env.GOOGLE_API_KEY;
     var url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`;
-    var path = '/tmp/download.mp3';
+    var path = 'tmp/download.mp3';
 
     console.log(url);
     
