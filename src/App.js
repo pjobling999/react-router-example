@@ -15,7 +15,7 @@ export class App extends React.Component {
     //   });
 
     //   //window.location.href = '/api';
-    // };
+    // }; https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com
     
     render() { 
     

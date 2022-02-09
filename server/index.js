@@ -2,33 +2,67 @@ import 'dotenv/config'
 import express from 'express';
 import fs from 'fs';
 import fetch from 'node-fetch';
+import util from 'util';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-function rejected(result) {
-    console.error(result);
-}
+
+const downloadFile = (async (url, path, response, title) => {
+    const res = await fetch(url);
+    const fileStream = fs.createWriteStream(path);
+    await new Promise((resolve, reject) => {
+        res.body.pipe(fileStream);
+        res.body.on("error", reject);
+        fileStream.on("finish", resolve);
+      }).then(async () => { 
+            
+        let file = fs.createReadStream(path);
+        response.attachment(title + '.mp3');
+
+        await new Promise((resolve, reject) => {
+            
+            file.pipe(response);
+            //response.body.on("error", reject);
+            file.on("finish", resolve);
+        });
+            
+            
+                
+    });
+    
+  });
+
 
 app.get("/api/:id/:title", (req, res) => {
 
     var id = req.params.id;
     var title = req.params.title;
     var key = process.env.GOOGLE_API_KEY;
+    var url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`;
 
-    fetch(`https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`).then(res2 => new Promise((resolve, reject) => {
-        const dest = fs.createWriteStream('/tmp/download.mp3');
-        res2.body.pipe(dest);
-        dest.on('close', () => resolve(dest));
-        dest.on('error', rejected);
-    })).then(x => { 
+    console.log(url);
+    
+    // fetch(`https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`).then(res2 => new Promise((resolve, reject) => {
+    //     const dest = fs.createWriteStream('/tmp/download.mp3');
+    //     res2.body.pipe(dest);
+    //     dest.on('close', () => resolve(dest));
+    //     dest.on('error', rejected);
+    // })).then(x => { 
             
-            res.attachment(title + '.mp3');
-            var readStream = fs.createReadStream('/tmp/download.mp3');
-            readStream.pipe(res);
-        });
+    //         res.attachment(title + '.mp3');
+    //         var readStream = fs.createReadStream('/tmp/download.mp3');
+    //         readStream.pipe(res);
+    //     });
 
+    downloadFile(`https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`,'tmp/download.mp3',res, title)
 
+    
+
+});
+
+app.get("/api", (req, res) => {
+    console.log(`GET TEST`);
 });
 
 app.listen(PORT, () => {
