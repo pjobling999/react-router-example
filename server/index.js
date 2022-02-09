@@ -34,9 +34,10 @@ const downloadFile = (async (url, path, response, title) => {
             file.on("error", reject);
             file.on("close", resolve);
 
-            console.log("code complete");
+            
 
-        });
+        }).then(x => console.log("code complete"));
+        
     });
 
   });
