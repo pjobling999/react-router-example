@@ -30,10 +30,11 @@ app.get("/api/:id/:title", (req, res) => {
     var title = req.params.title;
     var key = process.env.GOOGLE_API_KEY;
     var url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`;
+    var path = '/tmp/download.mp3';
 
     console.log(url);
     
-    downloadFile(url,'/tmp/download.mp3');
+    downloadFile(url,path);
     console.log('about to download')
     res.download(path,title + '.mp3');
     
