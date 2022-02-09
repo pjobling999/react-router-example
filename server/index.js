@@ -37,10 +37,8 @@ app.get("/api/:id/:title", async (req, res) => {
 
     console.log('About to download');
 
-    fs.readdirSync('/tmp','utf8').forEach(file => {
-        console.log(file);
-    });
-
+    console.log(fs.statSync(path).size);
+    
     res.download(path, title + '.mp3');
 });
 
