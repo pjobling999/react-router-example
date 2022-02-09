@@ -16,8 +16,8 @@ const downloadFile = (async (url, path, response, title) => {
     
         const dest = fs.createWriteStream(path);
         res.body.pipe(dest);
-        res.body.on("error", reject);
-        dest.on("finish", resolve);
+        dest.on('close', () => resolve());
+        dest.on('error', reject);
 
     })).then(async () => { 
             
