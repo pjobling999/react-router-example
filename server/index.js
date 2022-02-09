@@ -21,18 +21,16 @@ const downloadFile = (async (url, path, response, title) => {
 
     })).then(async () => { 
             
-        console.log("into 2nd part");
-
-        let file = fs.createReadStream(path);
-        response.attachment(title + '.mp3');
-
         await new Promise((resolve, reject) => {
-            
+        
             console.log("into 2nd promise");
+
+            let file = fs.createReadStream(path);
+            response.attachment(title + '.mp3');
 
             file.pipe(response);
             file.on("error", reject);
-            file.on("finsh", resolve);
+            file.on("finish", resolve);
 
             
 
