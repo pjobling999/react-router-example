@@ -32,7 +32,7 @@ const downloadFile = (async (url, path, response, title) => {
 
             file.pipe(response);
             file.on("error", reject);
-            file.on("finish", resolve);
+            file.on("close", resolve);
 
             console.log("code complete");
 
