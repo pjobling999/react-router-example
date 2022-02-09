@@ -2,11 +2,9 @@ import 'dotenv/config'
 import express from 'express';
 import fs from 'fs';
 import fetch from 'node-fetch';
-import util from 'util';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-
 
 const downloadFile = (async (url, path) => {
     
@@ -35,10 +33,6 @@ app.get("/api/:id/:title", async (req, res) => {
     
     await downloadFile(url, path);
 
-    console.log('About to download');
-
-    console.log(fs.statSync(path).size);
-    
     res.download(path, title + '.mp3');
 });
 
