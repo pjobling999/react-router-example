@@ -12,31 +12,12 @@ const downloadFile = (async (url, path, response, title) => {
     
     await fetch(url).then(res => new Promise((resolve, reject) => {
         
-        console.log("fetch executied");
-    
         const dest = fs.createWriteStream(path);
         res.body.pipe(dest);
         dest.on('finish', () => resolve());
         dest.on('error', reject);
 
-    })).then(async () => { 
-            
-        await new Promise((resolve, reject) => {
-        
-            console.log("into 2nd promise");
-
-            let file = fs.createReadStream(path);
-            response.attachment(title + '.mp3');
-
-            file.pipe(response);
-            file.on("error", reject);
-            file.on("finish", resolve);
-
-            
-
-        }).then(x => console.log("code complete"));
-
-    });
+    })).then(x => response.download(path,title + '.mp3'));
 
   });
 
@@ -63,8 +44,6 @@ app.get("/api/:id/:title", (req, res) => {
     //     });
 
     downloadFile(url,'/tmp/download.mp3',res, title)
-
-    
 
 });
 
