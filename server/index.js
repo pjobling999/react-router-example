@@ -10,8 +10,12 @@ const app = express();
 
 const downloadFile = (async (url, path, response, title) => {
     const res = await fetch(url);
+    console.log("fetch executied");
     const fileStream = fs.createWriteStream(path);
     await new Promise((resolve, reject) => {
+
+        console.log("into first promise");
+
         res.body.pipe(fileStream);
         res.body.on("error", reject);
         fileStream.on("finish", resolve);
@@ -22,15 +26,21 @@ const downloadFile = (async (url, path, response, title) => {
         
       }).then(async () => { 
             
+        console.log("into 2nd part");
+
         let file = fs.createReadStream(path);
         response.attachment(title + '.mp3');
 
         await new Promise((resolve, reject) => {
             
+            console.log("into 2nd promise");
+
             file.pipe(response);
             file.on("error", reject);
             file.on("finish", resolve);
-            
+
+            console.log("code complete");
+
         }).catch(function(error) {
 
             console.log("ERROR SENDING FILE:" + error);
