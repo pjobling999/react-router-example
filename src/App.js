@@ -3,7 +3,14 @@ import Jobbo from "./jobboStuff";
 import './App.module.css'; 
 
 export class App extends React.Component {
+    constructor(props) {
+      super(props);
+      
+      this.state = {
+        processing: false
+      }
 
+    }
     
     handleClick = async (name, title) => {
 
@@ -13,13 +20,20 @@ export class App extends React.Component {
       }
       else
       {
+          this.setState({
+            processing: true
+          });
+
           fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title)
             .then((result) => result.text())
             .then((data) => {
               
               console.log(data);
               window.location.href = data;
-
+              
+              this.setState({
+                processing: false
+              });
           })
 
       }
@@ -36,7 +50,7 @@ export class App extends React.Component {
             <h1 className="">THE TUNE ZONE</h1>
           </header>
         </div>
-
+       
         <main>
 
         {Jobbo.map((topItem, i) => {
@@ -54,12 +68,17 @@ export class App extends React.Component {
                   return (
                   
                     <li  key={index}>
+                       
                       <h2>{index}</h2>
                       <h3  >{item.Title}</h3>
                       <p>
                       </p>
-                      <button onClick={() => {this.handleClick(item.href, item.Title);}}>PLAY</button> 
-                      
+                     
+                      {this.state.processing 
+                        ? <p>Loading Please Wait...</p>
+                        :  <button onClick={() => {this.handleClick(item.href, item.Title);}}>PLAY</button> 
+                      }
+                          
                     </li>
                     
                   )
