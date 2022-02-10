@@ -13,18 +13,16 @@ export class App extends React.Component {
       }
       else
       {
-          fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title, { mode: 'no-cors'})
+          fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title)
             .then((result) => result.text())
             .then((data) => {
               
               console.log(data);
-              location.assign(data);
-              return false;
+              window.location.href = data;
 
           })
 
       }
-      return false;
 
     }; //https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com 
     

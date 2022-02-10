@@ -1,11 +1,13 @@
 import 'dotenv/config'
 import express from 'express';
+import cors from 'cors';
 import fs from 'fs';
 import fetch from 'node-fetch';
 import * as storage from '@google-cloud/storage';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+app.use(cors())
 const client = new storage.Storage();
 //const client = new storage.Storage({keyFilename: 'server/jobbo-tunez-7079f27f0f61.json'});
 
