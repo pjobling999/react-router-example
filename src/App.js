@@ -5,17 +5,25 @@ import './App.module.css';
 export class App extends React.Component {
 
     
-    // handleClick = (name) => {
+    handleClick = async (name, title) => {
 
-    //   fetch("/api")
-    //   .then( res => res.blob() )
-    //   .then( blob => {
-    //     var file = window.URL.createObjectURL(blob);
-    //     window.location.assign(file);
-    //   });
-
-    //   //window.location.href = '/api';
-    // }; https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com
+      if (name.includes("mailto"))
+      {
+        window.location.href = name;
+      }
+      else
+      {
+        await fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title)
+            .then((result) => result.text())
+            .then(async (data) => {
+              
+              console.log (data);
+              window.location.href = data;
+              
+            })
+      }
+      
+    }; //https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com 
     
     render() { 
     
@@ -46,10 +54,11 @@ export class App extends React.Component {
                   
                     <li  key={index}>
                       <h2>{index}</h2>
-                      <h3 ><a style={{color: "#b7b7b7"}} download href={'https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + item.href + '/' + item.Title} >{item.Title}</a></h3>
+                      <h3  >{item.Title}</h3>
                       <p>
                       </p>
-                      {/* <button onClick={() => {this.handleClick(item.href);}}>Download</button> */}
+                      <button onClick={() => {this.handleClick(item.href, item.Title);}}>PLAY</button> 
+                      
                     </li>
                     
                   )
