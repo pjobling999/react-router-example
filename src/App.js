@@ -17,7 +17,7 @@ export class App extends React.Component {
       {
         await fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title, { mode: 'no-cors'})
             .then((result) => result.text())
-            .then(async (data) => {
+            .then((data) => {
               
               
               downloadUrl = data;
