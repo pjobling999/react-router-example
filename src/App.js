@@ -7,6 +7,8 @@ export class App extends React.Component {
     
     handleClick = async (name, title) => {
 
+      var downloadUrl = '';
+
       if (name.includes("mailto"))
       {
         window.location.href = name;
@@ -17,10 +19,13 @@ export class App extends React.Component {
             .then((result) => result.text())
             .then(async (data) => {
               
-              console.log (data);
-              //window.location.href = data;
+              
+              downloadUrl = data;
               
             })
+
+          console.log(downloadUrl);
+          window.location.href = downloadUrl;
       }
       
     }; //https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com 
