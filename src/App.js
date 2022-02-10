@@ -22,10 +22,11 @@ export class App extends React.Component {
               
               downloadUrl = data;
               
+              console.log(downloadUrl);
+              window.location.href = downloadUrl;
+
             })
 
-          console.log(downloadUrl);
-          window.location.href = downloadUrl;
       }
       
     }; //https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com 
