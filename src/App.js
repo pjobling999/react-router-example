@@ -7,25 +7,20 @@ export class App extends React.Component {
     
     handleClick = async (name, title) => {
 
-      var downloadUrl = '';
-
       if (name.includes("mailto"))
       {
         window.location.href = name;
       }
       else
       {
-        await fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title, { mode: 'no-cors'})
+          fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title, { mode: 'no-cors'})
             .then((result) => result.text())
             .then((data) => {
               
-              
-              downloadUrl = data;
-              
-              console.log(downloadUrl);
-              window.location.href = downloadUrl;
+              console.log(data);
+              window.location.href = data;
 
-            })
+          })
 
       }
       
