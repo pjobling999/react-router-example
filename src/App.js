@@ -19,7 +19,8 @@ export class App extends React.Component {
               
               console.log(data);
               window.location.href = data;
-
+              return false;
+              
           })
 
       }
