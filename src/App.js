@@ -13,7 +13,7 @@ export class App extends React.Component {
       }
       else
       {
-        await fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title)
+        await fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title, { mode: 'no-cors'})
             .then((result) => result.text())
             .then(async (data) => {
               
