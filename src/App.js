@@ -18,14 +18,14 @@ export class App extends React.Component {
             .then((data) => {
               
               console.log(data);
-              window.location.href = data;
+              location.assign(data);
               return false;
 
           })
 
       }
       return false;
-      
+
     }; //https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com 
     
     render() { 
