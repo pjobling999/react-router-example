@@ -26,7 +26,7 @@ async function makePublic(bucketName, fileName ) {
   console.log(`gs://${bucketName}/${fileName} is now public.`);
 }
 
-const downloadFile = (async (url, path) => {
+const downloadFile = (async (url, path, title) => {
     
     const res = await fetch(url);
     console.log('fetch done');
@@ -42,9 +42,9 @@ const downloadFile = (async (url, path) => {
 
         console.log('got file');
 
-        await uploadFile('jobbo-tunez.appspot.com',path, 'download.mp3').catch(console.error);
+        await uploadFile('jobbo-tunez.appspot.com',path, `${title}.mp3`).catch(console.error);
         console.log('uploaded to bucket');
-        await makePublic('jobbo-tunez.appspot.com','download.mp3').catch(console.error);
+        await makePublic('jobbo-tunez.appspot.com',`${title}.mp3`).catch(console.error);
         console.log('made public');
     });
 
@@ -57,14 +57,14 @@ app.get("/api/:id/:title", async (req, res) => {
     var title = req.params.title;
     var key = process.env.GOOGLE_API_KEY;
     var url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`;
-    var path = '/tmp/download.mp3';
-    //var path = 'tmp/download.mp3';
+    var path = `/tmp/${title}.mp3`;
+    //var path = `tmp/${title}.mp3`;
 
     console.log(url);
     
-    await downloadFile(url, path);
+    await downloadFile(url, path, title);
     console.log('downloaded');
-    res.send('https://storage.googleapis.com/jobbo-tunez.appspot.com/download.mp3');
+    res.send(`https://storage.googleapis.com/jobbo-tunez.appspot.com/${title}.mp3`);
 });
 
 
