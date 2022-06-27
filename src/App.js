@@ -36,6 +36,18 @@ export class App extends React.Component {
               });
           })
 
+          // fetch('http://localhost:3001/api/' + name + '/' + title)
+          //   .then((result) => result.text())
+          //   .then((data) => {
+              
+          //     console.log(data);
+          //     window.location.href = data;
+              
+          //     this.setState({
+          //       processing: false
+          //     });
+          // })
+
       }
 
     }; //https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com 

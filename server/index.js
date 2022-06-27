@@ -4,6 +4,8 @@ import cors from 'cors';
 import fs from 'fs';
 import fetch from 'node-fetch';
 import * as storage from '@google-cloud/storage';
+import * as id3 from 'node-id3';
+import * as ffmetadata from 'ffmetadata';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -43,11 +45,30 @@ const downloadFile = (async (url, path, title) => {
         console.log('got file');
 
         //put mp3 tagging here with NodeID3
-        
+        const tags = {
+          title: "Tomorrow",
+          artist: "Kevin Penkin",
+          album: "TEST"
+        };
+        // const success1 = id3.removeTags(path)  
+        const success = id3.write(tags, path);
+        console.log(`set id3 tags - ${success} `);
+        // ffmetadata.setFfmpegPath(path);
+        // ffmetadata.write(path, tags, function(err) {
+        //   if (err) 
+          
+        //     console.error("Error writing metadata", err);
+          
+        //   else 
+          
+        //     console.log("Data written");
+        //  });
+
         await uploadFile('jobbo-tunez.appspot.com',path, `${title}.mp3`).catch(console.error);
         console.log('uploaded to bucket');
         await makePublic('jobbo-tunez.appspot.com',`${title}.mp3`).catch(console.error);
         console.log('made public');
+        
     });
 
   });
