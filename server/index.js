@@ -51,7 +51,7 @@ const downloadFile = (async (url, path, title) => {
         };
         const success = id3.write(tags, path);
         console.log(`set id3 tags - ${success} `);
-        
+         
         await uploadFile('jobbo-tunez.appspot.com',path, `${title}.mp3`).catch(console.error);
         console.log('uploaded to bucket');
         await makePublic('jobbo-tunez.appspot.com',`${title}.mp3`).catch(console.error);
