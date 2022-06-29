@@ -24,17 +24,17 @@ export class App extends React.Component {
             processing: true
           });
 
-          // fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title)
-          //   .then((result) => result.text())
-          //   .then((data) => {
+          fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title)
+            .then((result) => result.text())
+            .then((data) => {
               
-          //     console.log(data);
-          //     window.location.href = data;
+              console.log(data);
+              window.location.href = data;
               
-          //     this.setState({
-          //       processing: false
-          //     });
-          // })
+              this.setState({
+                processing: false
+              });
+          })
 
           fetch('http://localhost:3001/api/' + name + '/' + title, {
               method: 'POST',
