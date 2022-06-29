@@ -36,26 +36,26 @@ export class App extends React.Component {
               });
           })
 
-          fetch('http://localhost:3001/api/' + name + '/' + title, {
-              method: 'POST',
-              body: JSON.stringify({tags: {
-                   title: `${title}`,
-                   artist: `DJ JOBBO`,
-                   performerInfo: `DJ JOBBO`,
-                   album: `SLAMMING BEATS`
-              }}),
-              headers: {"Content-Type": "application/json"}
-            })
-            .then((result) => result.text())
-            .then((data) => {
+          // fetch('http://localhost:3001/api/' + name + '/' + title, {
+          //     method: 'POST',
+          //     body: JSON.stringify({tags: {
+          //          title: `${title}`,
+          //          artist: `DJ JOBBO`,
+          //          performerInfo: `DJ JOBBO`,
+          //          album: `SLAMMING BEATS`
+          //     }}),
+          //     headers: {"Content-Type": "application/json"}
+          //   })
+          //   .then((result) => result.text())
+          //   .then((data) => {
               
-              console.log(data);
-              window.location.href = data;
+          //     console.log(data);
+          //     window.location.href = data;
               
-              this.setState({
-                processing: false
-              });
-          })
+          //     this.setState({
+          //       processing: false
+          //     });
+          // })
 
       }
 
