@@ -5,12 +5,13 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import * as storage from '@google-cloud/storage';
 import * as id3 from 'node-id3';
+import bodyParser from 'body-parser';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors())
-const client = new storage.Storage();
-//const client = new storage.Storage({keyFilename: 'server/jobbo-tunez-7079f27f0f61.json'});
+//const client = new storage.Storage();
+const client = new storage.Storage({keyFilename: 'server/jobbo-tunez-7079f27f0f61.json'});
 
 async function uploadFile(bucketName, filePath, destFileName ) {
 
@@ -27,7 +28,7 @@ async function makePublic(bucketName, fileName ) {
   console.log(`gs://${bucketName}/${fileName} is now public.`);
 }
 
-const downloadFile = (async (url, path, title) => {
+const downloadFile = (async (url, path, title, tags) => {
     
     const res = await fetch(url);
     console.log('fetch done');
@@ -44,11 +45,11 @@ const downloadFile = (async (url, path, title) => {
         console.log('got file');
 
         //put mp3 tagging here with NodeID3
-        const tags = {
-          title: `${title}`,
-          artist: `DJ JOBBO`,
-          album: `SLAMMING BEATS`
-        };
+        // const tags = {
+        //   title: `${title}`,
+        //   artist: `DJ JOBBO`,
+        //   album: `SLAMMING BEATS`
+        // };
         const success = id3.write(tags, path);
         console.log(`set id3 tags - ${success} `);
          
@@ -61,19 +62,22 @@ const downloadFile = (async (url, path, title) => {
 
   });
 
-
-app.get("/api/:id/:title", async (req, res) => {
+// create application/json parser
+var jsonParser = bodyParser.json()
+  
+app.post("/api/:id/:title", jsonParser, async (req, res) => {
 
     var id = req.params.id;
     var title = req.params.title;
     var key = process.env.GOOGLE_API_KEY;
     var url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${key}`;
     var path = `/tmp/${title}.mp3`;
-    //var path = `tmp/${title}.mp3`;
+    var tags = req.body.tags;
 
     console.log(url);
+    console.log(req.body.tags);
     
-    await downloadFile(url, path, title);
+    await downloadFile(url, path, title, tags);
     console.log('downloaded');
     res.send(`https://storage.googleapis.com/jobbo-tunez.appspot.com/${title}.mp3`);
 });
