@@ -24,7 +24,18 @@ export class App extends React.Component {
             processing: true
           });
 
-          fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title)
+          // fetch('http://localhost:3001/api/' + name + '/' + title, {
+
+          fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title, {
+              method: 'POST',
+              body: JSON.stringify({tags: {
+                   title: `${title}`,
+                   artist: `DJ JOBBO`,
+                   performerInfo: `DJ JOBBO`,
+                   album: `SLAMMING BEATS`
+              }}),
+              headers: {"Content-Type": "application/json"}
+            })
             .then((result) => result.text())
             .then((data) => {
               
@@ -35,27 +46,6 @@ export class App extends React.Component {
                 processing: false
               });
           })
-
-          // fetch('http://localhost:3001/api/' + name + '/' + title, {
-          //     method: 'POST',
-          //     body: JSON.stringify({tags: {
-          //          title: `${title}`,
-          //          artist: `DJ JOBBO`,
-          //          performerInfo: `DJ JOBBO`,
-          //          album: `SLAMMING BEATS`
-          //     }}),
-          //     headers: {"Content-Type": "application/json"}
-          //   })
-          //   .then((result) => result.text())
-          //   .then((data) => {
-              
-          //     console.log(data);
-          //     window.location.href = data;
-              
-          //     this.setState({
-          //       processing: false
-          //     });
-          // })
 
       }
 
