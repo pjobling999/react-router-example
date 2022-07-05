@@ -1,2 +1,3 @@
 runtime: nodejs12
 service: jobboserver
+instance_class: F1
