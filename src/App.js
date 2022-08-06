@@ -11,8 +11,14 @@ export class App extends React.Component {
       }
 
     }
+
     
-    handleClick = async (name, title) => {
+    
+    handleClick = async (name, title, album, artist, albumArtist) => {
+
+      let defaultAlbum = "SLAMMING BEATS";
+      let defaultArtist = "DJ JOBBO";
+      let defaultAlbumArtist = "DJ JOBBO";
 
       if (name.includes("mailto"))
       {
@@ -30,9 +36,9 @@ export class App extends React.Component {
               method: 'POST',
               body: JSON.stringify({tags: {
                    title: `${title}`,
-                   artist: `DJ JOBBO`,
-                   performerInfo: `DJ JOBBO`,
-                   album: `SLAMMING BEATS`
+                   artist: `${artist ? artist : defaultArtist}`,
+                   performerInfo: `${albumArtist ? albumArtist : defaultAlbumArtist}`,
+                   album: `${album ? album : defaultAlbum}`
               }}),
               headers: {"Content-Type": "application/json"}
             })
@@ -87,7 +93,7 @@ export class App extends React.Component {
                      
                       {this.state.processing 
                         ? <p>Loading Please Wait...</p>
-                        :  <button onClick={() => {this.handleClick(item.href, item.Title);}}>PLAY</button> 
+                        :  <button onClick={() => {this.handleClick(item.href, item.Title, item.Album, item.Artist, item.AlbumArtist);}}>PLAY</button> 
                       }
                           
                     </li>
