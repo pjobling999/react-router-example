@@ -7,14 +7,13 @@ export class App extends React.Component {
       super(props);
       
       this.state = {
-        processing: false
+        processing: false,
+        randomUrl: ""
       }
 
     }
-
     
-    
-    handleClick = async (name, title, album, artist, albumArtist) => {
+    handleClick = async (name, title, album, artist, albumArtist, redirect = true) => {
 
       let defaultAlbum = "SLAMMING BEATS";
       let defaultArtist = "DJ JOBBO";
@@ -46,18 +45,36 @@ export class App extends React.Component {
             .then((data) => {
               
               console.log(data);
-              window.location.href = data;
+
+              if (redirect)
+                window.location.href = data;
               
               this.setState({
-                processing: false
+                processing: false,
+                randomUrl: data
               });
+
+              return data;
           })
 
       }
 
     }; //https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com 
     
+    randalClick =  async () => {
+
+      const keys = Object.keys(Jobbo[0].tunes);
+      const randIndex = Math.floor(Math.random() * keys.length);
+      const randKey = keys[randIndex];
+      const name = Jobbo[0].tunes[randKey];
+      
+      if (name.Title !== "CONTACT JOBBO")
+        this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
+
+    }
+
     render() { 
+    
     
     return (
     
@@ -111,7 +128,14 @@ export class App extends React.Component {
 
 
         </main>
+
+        <div>
+          <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> </p>
+          <p><audio src={this.state.randomUrl} controls autoPlay /></p>
+          <p style={{color:'white'}} >{this.state.randomUrl}</p>
+        </div>
       </div>
+      
     )
   }
 
