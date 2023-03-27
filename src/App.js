@@ -6,9 +6,12 @@ export class App extends React.Component {
     constructor(props) {
       super(props);
       
+      this.checkClick = this.checkClick.bind(this);
+
       this.state = {
         processing: false,
-        randomUrl: ""
+        randomUrl: "",
+        checked: false
       }
 
     }
@@ -63,18 +66,35 @@ export class App extends React.Component {
     
     randalClick =  async () => {
 
-      const keys = Object.keys(Jobbo[0].tunes);
+      const cleaned = Jobbo[0].tunes.slice(1, -1)
+      const keys = Object.keys(cleaned);
       const randIndex = Math.floor(Math.random() * keys.length);
       const randKey = keys[randIndex];
-      const name = Jobbo[0].tunes[randKey];
+      const name = cleaned[randKey];
       
-      if (name.Title !== "CONTACT JOBBO")
-        this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
+      this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
 
     }
 
-    render() { 
+    checkClick =  (e) => {
+
+      let clickedValue = e.target.checked;
+      this.setState({
+        checked: clickedValue
+      });
+
+    }
+
+    tuneEnded =  () => {
+
+      if (this.state.checked)
+      {
+        this.randalClick();
+      }  
+
+    }
     
+    render() { 
     
     return (
     
@@ -130,8 +150,9 @@ export class App extends React.Component {
         </main>
 
         <div>
-          <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> </p>
-          <p><audio src={this.state.randomUrl} controls autoPlay /></p>
+          <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
+          <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
+          <p><audio onEnded={this.tuneEnded} src={this.state.randomUrl} controls autoPlay /></p>
           <p style={{color:'white'}} >{this.state.randomUrl}</p>
         </div>
       </div>
