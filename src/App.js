@@ -34,7 +34,7 @@ export class App extends React.Component {
 
           // fetch('http://localhost:3001/api/' + name + '/' + title, {
 
-          fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title, {
+          await fetch('https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com/api/' + name + '/' + title, {
               method: 'POST',
               body: JSON.stringify({tags: {
                    title: `${title}`,
@@ -72,7 +72,7 @@ export class App extends React.Component {
       const randKey = keys[randIndex];
       const name = cleaned[randKey];
       
-      this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
+      await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
 
     }
 
@@ -85,11 +85,12 @@ export class App extends React.Component {
 
     }
 
-    tuneEnded =  () => {
+    tuneEnded = async () => {
 
       if (this.state.checked)
       {
-        this.randalClick();
+        await this.randalClick();
+        console.log("check")
       }  
 
     }
