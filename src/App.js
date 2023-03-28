@@ -2,6 +2,8 @@ import React from 'react'
 import Jobbo from "./jobboStuff";
 import './App.module.css'; 
 
+var wakeLock = null;
+
 export class App extends React.Component {
     constructor(props) {
       super(props);
@@ -14,8 +16,23 @@ export class App extends React.Component {
         checked: false
       }
 
+      
+      
     }
     
+    // Function that attempts to request a screen wake lock.
+    requestWakeLock = async () => {
+      try {
+        wakeLock = await navigator.wakeLock.request();
+        wakeLock.addEventListener('release', () => {
+          console.log('Screen Wake Lock released:', wakeLock.released);
+        });
+        console.log('Screen Wake Lock released:', wakeLock.released);
+      } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+      }
+    };
+
     handleClick = async (name, title, album, artist, albumArtist, redirect = true) => {
 
       let defaultAlbum = "SLAMMING BEATS";
@@ -79,6 +96,19 @@ export class App extends React.Component {
     checkClick =  (e) => {
 
       let clickedValue = e.target.checked;
+
+      if (clickedValue)
+      {
+        // Request a screen wake lock…
+        this.requestWakeLock();
+      }
+      else
+      {
+        wakeLock.release();
+        wakeLock = null;
+      }
+      
+
       this.setState({
         checked: clickedValue
       });
@@ -90,7 +120,6 @@ export class App extends React.Component {
       if (this.state.checked)
       {
         await this.randalClick();
-        console.log("check")
       }  
 
     }
