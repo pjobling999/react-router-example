@@ -91,33 +91,30 @@ export class App extends React.Component {
       
       await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
 
-      if (this.state.checked)
-      {
-        document.getElementById("myPlayer").addEventListener("ended", this.randalClick, false);
-      }
-
-      document.getElementById("myPlayer").play();
     }
-
+    
     checkClick =  (e) => {
 
       let clickedValue = e.target.checked;
 
       if (clickedValue)
       {
-        // Request a screen wake lock…
+        // Request a screen wake lock… and add listener
         this.requestWakeLock();
+        document.getElementById("myPlayer").addEventListener("ended", this.randalClick);
       }
       else
       {
         wakeLock.release();
         wakeLock = null;
+        document.getElementById("myPlayer").removeEventListener("ended", this.randalClick);
       }
       
       this.setState({
         checked: clickedValue
       });
 
+      
     }
 
     render() { 
@@ -178,7 +175,7 @@ export class App extends React.Component {
         <div>
           <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
           <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
-          <p><audio id="myPlayer"  src={this.state.randomUrl} controls  /></p>
+          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay /></p>
           <p style={{color:'white'}} >{this.state.randomUrl}</p>
         </div>
       </div>
