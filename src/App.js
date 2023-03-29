@@ -121,7 +121,8 @@ export class App extends React.Component {
           sizes: '512x512',
           type: 'image/png' }]
       });
-
+      navigator.mediaSession.playbackState = "playing";
+      
       await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
 
     }
