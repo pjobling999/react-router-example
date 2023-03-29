@@ -91,6 +91,12 @@ export class App extends React.Component {
       
       await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
 
+      if (this.state.checked)
+      {
+        document.getElementById("myPlayer").addEventListener("ended", this.randalClick, false);
+      }
+
+      document.getElementById("myPlayer").play();
     }
 
     checkClick =  (e) => {
@@ -108,23 +114,12 @@ export class App extends React.Component {
         wakeLock = null;
       }
       
-
       this.setState({
         checked: clickedValue
       });
 
     }
 
-    tuneEnded = async () => {
-
-      if (this.state.checked)
-      {
-        await this.randalClick();
-        document.getElementById('myPlayer').play();
-      }  
-
-    }
-    
     render() { 
     
     return (
@@ -183,7 +178,7 @@ export class App extends React.Component {
         <div>
           <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
           <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
-          <p><audio id="myPlayer" onEnded={this.tuneEnded} src={this.state.randomUrl} controls  /></p>
+          <p><audio id="myPlayer"  src={this.state.randomUrl} controls  /></p>
           <p style={{color:'white'}} >{this.state.randomUrl}</p>
         </div>
       </div>
