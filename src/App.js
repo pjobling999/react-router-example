@@ -4,29 +4,6 @@ import './App.module.css';
 
 var wakeLock = null;
 
-function setMediaSessionMetaData(props){
-  // Progressive enhancement of your PWA,
-  // which means we have to check if the
-  // new API is available.
-  if(!('mediaSession' in navigator)){
-    return;
-  }
-  
-  navigator.mediaSession.metadata = new window.MediaMetadata({
-    title: props.title,
-    artist: props.artist,
-    album: props.album,
-    artwork: props.artwork
-  });
-  
-  // Add action handlers, if any.
-  // For a complete list, check out the
-  // MDN-link in the addendum.
-  if(props.play){
-    navigator.mediaSession.setActionHandler('play', function() { /* Code excerpted. */ });
-  }
-}
-
 export class App extends React.Component {
     constructor(props) {
       super(props);
@@ -38,8 +15,6 @@ export class App extends React.Component {
         randomUrl: "",
         checked: false
       }
-
-      
       
     }
     
@@ -112,17 +87,6 @@ export class App extends React.Component {
       const randKey = keys[randIndex];
       const name = cleaned[randKey];
       
-      setMediaSessionMetaData({
-        title: "Song name",
-        artist: "Artist name",
-        album: "Album name",
-        artwork: [{ 
-          src: 'https://dummyimage.com/512x512',
-          sizes: '512x512',
-          type: 'image/png' }]
-      });
-      navigator.mediaSession.playbackState = "playing";
-      
       await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
 
     }
@@ -148,7 +112,6 @@ export class App extends React.Component {
         checked: clickedValue
       });
 
-      
     }
 
     render() { 
