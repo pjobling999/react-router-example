@@ -2,6 +2,8 @@ import React from 'react'
 import Jobbo from "./jobboStuff";
 import './App.module.css'; 
 
+var wakeLock = null;
+
 export class App extends React.Component {
     constructor(props) {
       super(props);
@@ -16,6 +18,19 @@ export class App extends React.Component {
       
     }
     
+    // Function that attempts to request a screen wake lock.
+    requestWakeLock = async () => {
+      try {
+        wakeLock = await navigator.wakeLock.request();
+        wakeLock.addEventListener('release', () => {
+          console.log('Screen Wake Lock released:', wakeLock.released);
+        });
+        console.log('Screen Wake Lock released:', wakeLock.released);
+      } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+      }
+    };
+
     handleClick = async (name, title, album, artist, albumArtist, redirect = true) => {
 
       let defaultAlbum = "SLAMMING BEATS";
@@ -88,10 +103,14 @@ export class App extends React.Component {
 
       if (clickedValue)
       {
+        // Request a screen wake lock… and add listener
+        this.requestWakeLock();
         document.getElementById("myPlayer").addEventListener("ended", this.randalClick);
       }
       else
       {
+        wakeLock.release();
+        wakeLock = null;
         document.getElementById("myPlayer").removeEventListener("ended", this.randalClick);
       }
       
