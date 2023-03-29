@@ -120,6 +120,7 @@ export class App extends React.Component {
       if (this.state.checked)
       {
         await this.randalClick();
+        document.getElementById('myPlayer').play();
       }  
 
     }
@@ -182,7 +183,7 @@ export class App extends React.Component {
         <div>
           <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
           <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
-          <p><audio onEnded={this.tuneEnded} src={this.state.randomUrl} controls autoPlay /></p>
+          <p><audio id="myPlayer" onEnded={this.tuneEnded} src={this.state.randomUrl} controls  /></p>
           <p style={{color:'white'}} >{this.state.randomUrl}</p>
         </div>
       </div>
