@@ -49,8 +49,8 @@ export class App extends React.Component {
               
               console.log(data);
 
-              if (redirect)
-                window.location.href = data;
+              // if (redirect)
+              //   window.location.href = data;
               
               this.setState({
                 processing: false,
@@ -73,6 +73,12 @@ export class App extends React.Component {
       const name = cleaned[randKey];
       
       await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
+
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        title: name.Title,
+        artist: name.Artist,
+        album: name.Album
+      });
 
     }
     
