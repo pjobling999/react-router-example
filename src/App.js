@@ -79,7 +79,8 @@ export class App extends React.Component {
                 artist: `${artist ? artist : defaultArtist}`,
                 album: `${album ? album : defaultAlbum}`
               });
-
+              navigator.mediaSession.playbackState = "playing";
+              
               return data;
           })
 
