@@ -64,12 +64,20 @@ export class App extends React.Component {
               
               console.log(data);
 
-              // if (redirect)
-              //   window.location.href = data;
-              
+              if (redirect)
+              {
+                this.executeScroll();
+              }
+
               this.setState({
                 processing: false,
                 randomUrl: data
+              });
+              
+              navigator.mediaSession.metadata = new window.MediaMetadata({
+                title: `${title}`,
+                artist: `${artist ? artist : defaultArtist}`,
+                album: `${album ? album : defaultAlbum}`
               });
 
               return data;
@@ -88,12 +96,6 @@ export class App extends React.Component {
       const name = cleaned[randKey];
       
       await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
-
-      navigator.mediaSession.metadata = new window.MediaMetadata({
-        title: name.Title,
-        artist: name.Artist,
-        album: name.Album
-      });
 
     }
     
@@ -119,6 +121,8 @@ export class App extends React.Component {
       });
 
     }
+
+    executeScroll = () => this.myRef.scrollIntoView()
 
     render() { 
     
@@ -179,7 +183,7 @@ export class App extends React.Component {
           <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
           <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
           <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay /></p>
-          <p style={{color:'white'}} >{this.state.randomUrl}</p>
+          <p><label ref={ (ref) => this.myRef=ref } style={{color:'white'}} >{this.state.randomUrl}</label></p>
         </div>
       </div>
       
