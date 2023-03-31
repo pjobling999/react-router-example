@@ -123,6 +123,15 @@ export class App extends React.Component {
 
     }
 
+    updatePlay = () => {
+
+      navigator.mediaSession.setPositionState({
+                  duration: document.getElementById("myPlayer").duration,
+                  playbackRate: document.getElementById("myPlayer").playbackRate,
+                  position: document.getElementById("myPlayer").currentTime
+                });
+    }
+
     executeScroll = () => this.myRef.scrollIntoView()
 
     render() { 
@@ -183,8 +192,9 @@ export class App extends React.Component {
         <div>
           <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
           <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
-          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay /></p>
+          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay onPlay={this.updatePlay} /></p>
           <p><label ref={ (ref) => this.myRef=ref } style={{color:'white'}} >{this.state.randomUrl}</label></p>
+        
         </div>
       </div>
       
