@@ -13,7 +13,8 @@ export class App extends React.Component {
       this.state = {
         processing: false,
         randomUrl: "",
-        checked: false
+        checked: false,
+        played: []
       }
       
     }
@@ -98,6 +99,9 @@ export class App extends React.Component {
       
       await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
 
+      this.setState({
+        played: this.state.played.push(randIndex)
+      });
     }
     
     checkClick =  (e) => {
