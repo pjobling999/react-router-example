@@ -14,7 +14,7 @@ export class App extends React.Component {
         processing: false,
         randomUrl: "",
         checked: false,
-        played: []
+        notPlayed: Jobbo[0].tunes.slice(1, -1)
       }
       
     }
@@ -91,16 +91,21 @@ export class App extends React.Component {
     
     randalClick =  async () => {
 
-      const cleaned = Jobbo[0].tunes.slice(1, -1)
-      const keys = Object.keys(cleaned);
+      const keys = Object.keys(this.state.notPlayed);
+      if (keys.length==0)
+        keys = Object.keys(Jobbo[0].tunes.slice(1, -1));
+
       const randIndex = Math.floor(Math.random() * keys.length);
       const randKey = keys[randIndex];
-      const name = cleaned[randKey];
+      const name = this.state.notPlayed[randKey];
       
       await this.handleClick(name.href, name.Title, name.Album, name.Artist, name.AlbumArtist, false);
 
+      const notPlayedNew = this.state.notPlayed;
+      notPlayedNew.splice(randKey, 1);
+
       this.setState({
-        played: this.state.played.push(randIndex)
+        notPlayed: notPlayedNew
       });
     }
     
@@ -129,11 +134,15 @@ export class App extends React.Component {
 
     updatePlay = () => {
 
-      navigator.mediaSession.setPositionState({
-                  duration: document.getElementById("myPlayer").duration,
-                  playbackRate: document.getElementById("myPlayer").playbackRate,
-                  position: document.getElementById("myPlayer").currentTime
-                });
+      const player = document.getElementById("myPlayer").duration;
+      if (player)
+      {
+        navigator.mediaSession.setPositionState({
+                    duration: player.duration,
+                    playbackRate: player.playbackRate,
+                    position: player.currentTime
+                  });
+      }
     }
 
     executeScroll = () => this.myRef.scrollIntoView()
@@ -196,7 +205,7 @@ export class App extends React.Component {
         <div>
           <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
           <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
-          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay onPlay={this.updatePlay} /></p>
+          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay onTimeUpdate={this.updatePlay} /></p>
           <p><label ref={ (ref) => this.myRef=ref } style={{color:'white'}} >{this.state.randomUrl}</label></p>
         
         </div>
