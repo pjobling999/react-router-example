@@ -91,7 +91,7 @@ export class App extends React.Component {
     
     randalClick =  async () => {
 
-      const keys = Object.keys(this.state.notPlayed);
+      var keys = Object.keys(this.state.notPlayed);
       if (keys.length==0)
         keys = Object.keys(Jobbo[0].tunes.slice(1, -1));
 
