@@ -63,9 +63,11 @@ export class App extends React.Component {
         if (details.fastSeek && 'fastSeek' in audio) {
           // Only use fast seek if supported.
           audio.fastSeek(details.seekTime);
-          return;
         }
-        audio.currentTime = details.seekTime;
+        else
+        {
+          audio.currentTime = details.seekTime;
+        }
         updatePositionState();
       });
     }
