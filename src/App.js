@@ -190,7 +190,7 @@ export class App extends React.Component {
 
     }
 
-    updatePlay = (event) => {
+    /* updatePlay = (event) => {
 
       if (event.target.duration)
       {
@@ -204,7 +204,7 @@ export class App extends React.Component {
               //cheeky pause
         }, 2000);
       }
-    }
+    } */
 
     executeScroll = () => this.myRef.scrollIntoView()
 
@@ -266,7 +266,7 @@ export class App extends React.Component {
         <div>
           <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
           <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
-          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay onTimeUpdate={this.updatePlay} /></p>
+          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay /* onTimeUpdate={this.updatePlay} */ /></p>
           <p><label ref={ (ref) => this.myRef=ref } style={{color:'white'}} >{this.state.randomUrl}</label></p>
         
         </div>
