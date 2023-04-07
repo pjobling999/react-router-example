@@ -68,7 +68,7 @@ export class App extends React.Component {
         {
           audio.currentTime = details.seekTime;
         }
-        updatePositionState();
+        //updatePositionState();
       });
     }
     
