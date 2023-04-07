@@ -34,28 +34,28 @@ export class App extends React.Component {
         // Resume playback
         const audio = document.querySelector('audio');
         await audio.play();
-        //updatePositionState();
+        updatePositionState();
       });
 
       navigator.mediaSession.setActionHandler('pause', () => {
         // Pause active playback
         const audio = document.querySelector('audio');
         audio.pause();
-        //updatePositionState();
+        updatePositionState();
       });
       
       navigator.mediaSession.setActionHandler('seekbackward', (details) => {
         const audio = document.querySelector('audio');
         const skipTime = details.seekOffset || 10;
         audio.currentTime = Math.max(audio.currentTime - skipTime, 0);
-        //updatePositionState();
+        updatePositionState();
       });
       
       navigator.mediaSession.setActionHandler('seekforward', (details) => {
         const audio = document.querySelector('audio');
         const skipTime = details.seekOffset || 10;
         audio.currentTime = Math.min(audio.currentTime + skipTime, audio.duration);
-        //updatePositionState();
+        updatePositionState();
       });
 
       navigator.mediaSession.setActionHandler('seekto', (details) => {
@@ -68,7 +68,7 @@ export class App extends React.Component {
         {
           audio.currentTime = details.seekTime;
         }
-        //updatePositionState();
+        updatePositionState();
       });
     }
     
@@ -192,22 +192,6 @@ export class App extends React.Component {
 
     }
 
-    /* updatePlay = (event) => {
-
-      if (event.target.duration)
-      {
-        navigator.mediaSession.setPositionState({
-                    duration: event.target.duration,
-                    playbackRate: event.target.playbackRate,
-                    position: event.target.currentTime
-                  });
-
-        setTimeout(function(){
-              //cheeky pause
-        }, 2000);
-      }
-    } */
-
     executeScroll = () => this.myRef.scrollIntoView()
 
     render() { 
@@ -268,7 +252,7 @@ export class App extends React.Component {
         <div>
           <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
           <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
-          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay /* onTimeUpdate={this.updatePlay} */ /></p>
+          <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay onTimeUpdate={this.updatePositionState}  /></p>
           <p><label ref={ (ref) => this.myRef=ref } style={{color:'white'}} >{this.state.randomUrl}</label></p>
         
         </div>
