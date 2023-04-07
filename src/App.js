@@ -34,28 +34,28 @@ export class App extends React.Component {
         // Resume playback
         const audio = document.querySelector('audio');
         await audio.play();
-        updatePositionState();
+        //updatePositionState();
       });
 
       navigator.mediaSession.setActionHandler('pause', () => {
         // Pause active playback
         const audio = document.querySelector('audio');
         audio.pause();
-        updatePositionState();
+        //updatePositionState();
       });
       
       navigator.mediaSession.setActionHandler('seekbackward', (details) => {
         const audio = document.querySelector('audio');
         const skipTime = details.seekOffset || 10;
         audio.currentTime = Math.max(audio.currentTime - skipTime, 0);
-        updatePositionState();
+        //updatePositionState();
       });
       
       navigator.mediaSession.setActionHandler('seekforward', (details) => {
         const audio = document.querySelector('audio');
         const skipTime = details.seekOffset || 10;
         audio.currentTime = Math.min(audio.currentTime + skipTime, audio.duration);
-        updatePositionState();
+        //updatePositionState();
       });
 
       navigator.mediaSession.setActionHandler('seekto', (details) => {
