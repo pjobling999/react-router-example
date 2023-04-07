@@ -92,7 +92,7 @@ export class App extends React.Component {
     randalClick =  async () => {
 
       var keys = Object.keys(this.state.notPlayed);
-      if (keys.length==0)
+      if (keys.length===0)
         keys = Object.keys(Jobbo[0].tunes.slice(1, -1));
 
       const randIndex = Math.floor(Math.random() * keys.length);
@@ -132,17 +132,14 @@ export class App extends React.Component {
 
     }
 
-    updatePlay = () => {
+    updatePlay = (event) => {
 
-      const player = document.getElementById("myPlayer").duration;
-      if (player)
-      {
-        navigator.mediaSession.setPositionState({
-                    duration: player.duration,
-                    playbackRate: player.playbackRate,
-                    position: player.currentTime
-                  });
-      }
+      navigator.mediaSession.setPositionState({
+                  duration: event.target.duration,
+                  playbackRate: event.target.playbackRate,
+                  position: event.target.currentTime
+                });
+    
     }
 
     executeScroll = () => this.myRef.scrollIntoView()
