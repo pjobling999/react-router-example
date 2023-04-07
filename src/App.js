@@ -4,6 +4,19 @@ import './App.module.css';
 
 var wakeLock = null;
 
+function updatePositionState() {
+  
+  const audio = document.querySelector('audio');
+
+  if ('setPositionState' in navigator.mediaSession) {
+    navigator.mediaSession.setPositionState({
+      duration: audio.duration,
+      playbackRate: audio.playbackRate,
+      position: audio.currentTime,
+    });
+  }
+}
+
 export class App extends React.Component {
     constructor(props) {
       super(props);
@@ -17,8 +30,54 @@ export class App extends React.Component {
         notPlayed: Jobbo[0].tunes.slice(1, -1)
       }
       
+      navigator.mediaSession.setActionHandler('play', async () => {
+        // Resume playback
+        const audio = document.querySelector('audio');
+        await audio.play();
+        updatePositionState();
+      });
+
+      navigator.mediaSession.setActionHandler('pause', () => {
+        // Pause active playback
+        const audio = document.querySelector('audio');
+        audio.pause();
+        updatePositionState();
+      });
+      
+      navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+        const audio = document.querySelector('audio');
+        const skipTime = details.seekOffset || 10;
+        audio.currentTime = Math.max(audio.currentTime - skipTime, 0);
+        updatePositionState();
+      });
+      
+      navigator.mediaSession.setActionHandler('seekforward', (details) => {
+        const audio = document.querySelector('audio');
+        const skipTime = details.seekOffset || 10;
+        audio.currentTime = Math.min(audio.currentTime + skipTime, audio.duration);
+        updatePositionState();
+      });
+
+      navigator.mediaSession.setActionHandler('seekto', (details) => {
+        const audio = document.querySelector('audio');
+        if (details.fastSeek && 'fastSeek' in audio) {
+          // Only use fast seek if supported.
+          audio.fastSeek(details.seekTime);
+          return;
+        }
+        audio.currentTime = details.seekTime;
+        updatePositionState();
+      });
     }
     
+    playEvent = () => {
+      navigator.mediaSession.playbackState = 'playing';
+    };
+    
+    pauseEvent = () => {
+      navigator.mediaSession.playbackState = 'paused';
+    };
+
     // Function that attempts to request a screen wake lock.
     requestWakeLock = async () => {
       try {
@@ -63,28 +122,27 @@ export class App extends React.Component {
             .then((result) => result.text())
             .then((data) => {
               
-              console.log(data);
+                console.log(data);
 
-              if (redirect)
-              {
-                this.executeScroll();
-              }
+                if (redirect)
+                {
+                  this.executeScroll();
+                }
 
-              this.setState({
-                processing: false,
-                randomUrl: data
-              });
-              
-              navigator.mediaSession.metadata = new window.MediaMetadata({
-                title: `${title}`,
-                artist: `${artist ? artist : defaultArtist}`,
-                album: `${album ? album : defaultAlbum}`
-              });
-              navigator.mediaSession.playbackState = "playing";
-              
-              return data;
-          })
-
+                this.setState({
+                  processing: false,
+                  randomUrl: data
+                });
+                
+                navigator.mediaSession.metadata = new window.MediaMetadata({
+                  title: `${title}`,
+                  artist: `${artist ? artist : defaultArtist}`,
+                  album: `${album ? album : defaultAlbum}`
+                });
+                navigator.mediaSession.playbackState = "playing";
+                
+                return data;
+            })
       }
 
     }; //https://jobboserver-dot-jobbo-tunez.ew.r.appspot.com 
@@ -134,12 +192,18 @@ export class App extends React.Component {
 
     updatePlay = (event) => {
 
-      navigator.mediaSession.setPositionState({
-                  duration: event.target.duration,
-                  playbackRate: event.target.playbackRate,
-                  position: event.target.currentTime
-                });
-    
+      if (event.target.duration)
+      {
+        navigator.mediaSession.setPositionState({
+                    duration: event.target.duration,
+                    playbackRate: event.target.playbackRate,
+                    position: event.target.currentTime
+                  });
+
+        setTimeout(function(){
+              //cheeky pause
+        }, 2000);
+      }
     }
 
     executeScroll = () => this.myRef.scrollIntoView()
