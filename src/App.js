@@ -194,6 +194,10 @@ export class App extends React.Component {
 
     executeScroll = () => this.myRef.scrollIntoView()
 
+    copyToClipboard = (e) => {
+      navigator.clipboard.writeText(e.target.innerText)
+    };
+
     render() { 
     
     return (
@@ -204,7 +208,7 @@ export class App extends React.Component {
             <h1 className="">THE TUNE ZONE</h1>
 
             <div>
-              <p><label ref={ (ref) => this.myRef=ref } style={{color:'white'}} >{this.state.randomUrl}</label></p>
+              <p><label onClick={this.copyToClipboard} ref={ (ref) => this.myRef=ref } style={{color:'white'}} >{encodeURI(this.state.randomUrl)}</label></p>
               <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
               <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
               <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay onTimeUpdate={this.updatePositionState}  /></p>
