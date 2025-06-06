@@ -193,10 +193,15 @@ export class App extends React.Component {
     }
 
     executeScroll = () => this.myRef.scrollIntoView()
-
+    
     copyToClipboard = (e) => {
       navigator.clipboard.writeText(e.target.innerText)
     };
+
+    navToUrl = (e) => {
+      window.location = e.target.value
+    };
+
 
     render() { 
     
@@ -212,6 +217,19 @@ export class App extends React.Component {
               <p><button onClick={() => {this.randalClick();}}>Click for a random tune...</button> 
               <input type="checkbox" id="checkbox" onChange={this.checkClick} checked={this.state.checked}/><label style={{color:'white'}}>Random Radio Mode</label>  </p>
               <p><audio id="myPlayer"  src={this.state.randomUrl} controls autoPlay onTimeUpdate={this.updatePositionState}  /></p>
+
+              <select name="forma" onChange={this.navToUrl}  >
+
+                {Jobbo.map((topItem, i) => {
+
+                return (
+
+                  <option key={i} value={ `#${topItem.category}` }>{topItem.category}</option>
+                  
+                )
+                })}
+
+              </select>
             </div>
 
           </header>
@@ -227,6 +245,7 @@ export class App extends React.Component {
   
           <div key={i}>
             <div>
+              <a name={topItem.category}></a>
               <p className="sectionHeaders">{topItem.category}</p>
             
               <ul className='tilesWrap'>
